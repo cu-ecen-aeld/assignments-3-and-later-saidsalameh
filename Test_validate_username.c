@@ -1,3 +1,5 @@
+//your-github-username-here-in-conf-file
+
 #include "unity.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -14,11 +16,9 @@
 */
 void test_validate_my_username()
 {
-    /**
-     * TODO: Replace the line below with your code here as described above to verify your /conf/username.txt 
-     * config file and my_username() functions are setup properly
-     */
-     const char *name_1 = my_username();
-     char* name_2 = malloc_username_from_conf_file();
-     TEST_ASSERT_TRUE_MESSAGE(name_1,name_2);
+  const char* uname = my_username();
+     char* unamecf = mallococ_username_from_conf_file();
+     TEST_ASSERT_TRUE_MESSAGE(uname,unamecf,"AESD students, please fix me!");
+    //TEST_ASSERT_TRUE_MESSAGE(false,"saidsalameh");
+    // TEST_ASSERT_TRUE_MESSAGE(false,"AESD students, please fix me!");
 }
