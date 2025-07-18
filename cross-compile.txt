@@ -1,0 +1,11 @@
+vboxuser@Ubuntu:~/assignment-2-saidsalameh/finder-app$ make CROSS_COMPILE=aarch64-linux-gnu-
+aarch64-linux-gnu-gcc -Wall -Wextra -O2 -c writer.c -o writer.o
+aarch64-linux-gnu-gcc -Wall -Wextra -O2 -o writer writer.o
+vboxuser@Ubuntu:~/assignment-2-saidsalameh/finder-app$ make CROSS_COMPILE=aarch64-linux-gnu- -v
+GNU Make 4.3
+Construit pour x86_64-pc-linux-gnu
+Copyright (C) 1988-2020 Free Software Foundation, Inc.
+Licence GPLv3+ : GNU GPL version 3 ou ultérieure <http://gnu.org/licenses/gpl.html>
+Ceci est un logiciel libre : vous êtes autorisé à le modifier et à la redistribuer.
+Il ne comporte AUCUNE GARANTIE, dans la mesure de ce que permet la loi.
+
