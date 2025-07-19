@@ -1,4 +1,4 @@
-#!/bin/sh
+﻿#!/bin/sh
 # Tester script for assignment 1 and assignment 2
 # Author: Siddhant Jajoo
 
@@ -8,7 +8,14 @@ set -u
 NUMFILES=10
 WRITESTR=AELD_IS_FUN
 WRITEDIR=/tmp/aeld-data
-username=$(cat conf/username.txt)
+
+# Config files now expected under /etc/finder-app/conf (Buildroot layout)
+username=$(cat /etc/finder-app/conf/username.txt)
+assignment=$(cat /etc/finder-app/conf/assignment.txt)
+
+# Resolve writer and finder.sh from $PATH
+WRITER_SCRIPT=$(which writer)
+FINDER_SCRIPT=$(which finder.sh)
 
 if [ $# -lt 3 ]
 then
@@ -32,7 +39,7 @@ echo "Writing ${NUMFILES} files containing string ${WRITESTR} to ${WRITEDIR}"
 rm -rf "${WRITEDIR}"
 
 # create $WRITEDIR if not assignment1
-assignment=`cat ../conf/assignment.txt`
+assignment=`cat /conf/assignment.txt`
 
 if [ $assignment != 'assignment1' ]
 then
@@ -48,16 +55,17 @@ then
 		exit 1
 	fi
 fi
-# Change made here :
 echo "Removing the old writer utility and compiling as a native application"
-make clean
-make
+#make clean
+#make
 
 for i in $( seq 1 $NUMFILES)
 do
 	./writer "$WRITEDIR/${username}$i.txt" "$WRITESTR"
-	#./writer.sh "$WRITEDIR/${username}$i.txt" "$WRITESTR"
 done
+
+# Use PATH-resolved finder.sh and write output to result file
+$FINDER_SCRIPT "$WRITEDIR" "$WRITESTR" > /tmp/assignment4-result.txt
 
 OUTPUTSTRING=$(./finder.sh "$WRITEDIR" "$WRITESTR")
 
