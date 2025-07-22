@@ -113,7 +113,7 @@ cp $SYSROOT_PATH/lib64/libc.so.6 $OUTDIR/rootfs/lib64
 # TODO: Make device nodes
 sudo mknod -m 666 $OUTDIR/rootfs/dev/null c 1 3 
 sudo mknod -m 666 $OUTDIR/rootfs/dev/console c 5 1
-sudo mknod -m 666 $OUTDIR/rootfs/dev/tty1 c 4 1
+
 
 # TODO: Clean and build the writer utility
 cd $FINDER_APP_DIR
@@ -133,12 +133,20 @@ mkdir -p $OUTDIR/rootfs/etc/finder-app/conf
 cp conf/username.txt conf/assignment.txt $OUTDIR/rootfs/etc/finder-app/conf
 
 
+sed -i 's|\.\./conf/assignment.txt|assignment.txt|' ${OUTDIR}/rootfs/home/finder-test.sh
+sed -i 's|conf/username.txt|username.txt|' ${OUTDIR}/rootfs/home/finder-test.sh
+sed -i 's|#!/bin/bash|#!/bin/sh|' ${OUTDIR}/rootfs/home/finder.sh
+
 cp -r finder.sh finder-test.sh writer writer.c $OUTDIR/rootfs/home
 cp autorun-qemu.sh $OUTDIR/rootfs/home
+cp writer $OUTDIR/rootfs/usr/bin
+
+
 chmod +x $OUTDIR/rootfs/home/finder.sh
 chmod +x $OUTDIR/rootfs/home/finder-test.sh
 chmod +x $OUTDIR/rootfs/home/autorun-qemu.sh
 chmod +x $OUTDIR/rootfs/home/writer
+chmod +x $OUTDIR/rootfs//usr/bin/writer
 
 # TODO: Chown the root directory
 cd $OUTDIR/rootfs
