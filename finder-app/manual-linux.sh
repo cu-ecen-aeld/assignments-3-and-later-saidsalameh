@@ -127,6 +127,12 @@ echo "Copy artifacts to home directory"
 
 mkdir -p $OUTDIR/rootfs/home/conf 
 cp conf/username.txt conf/assignment.txt $OUTDIR/rootfs/home/conf
+
+mkdir -p $OUTDIR/rootfs/etc/finder-app/conf
+
+cp conf/username.txt conf/assignment.txt $OUTDIR/rootfs/etc/finder-app/conf
+
+
 cp -r finder.sh finder-test.sh writer writer.c $OUTDIR/rootfs/home
 cp autorun-qemu.sh $OUTDIR/rootfs/home
 chmod +x $OUTDIR/rootfs/home/finder.sh

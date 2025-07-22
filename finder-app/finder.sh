@@ -1,31 +1,24 @@
-#!/bin/bash 
+#!/bin/sh
 
-#first bash script
-
-# Passing the first argument / $1:
-FILESDIR=$1
-# Passing the second argument / $2:
-SEARCHSTR=$2
-
-# if statement with a test command of :  $# -> number of arguments, -lt comparaison with 2
-if [ $# -lt 2 ]
-then 
-	echo "Number of arguments should be equal to 2"
+N_ARGS=2
+if [[ $# -ne "$N_ARGS" ]]; then
+	echo "The script requires 2 arguments:"
+	echo "1. File directory"
+	echo "2. Search string"
+	echo "Usage : $0 <arg1> <arg2>"
 	exit 1
-else
-	# if statement with a test command of :  ! -> not true, -d "FILESDIR" -> directory with the name "FILESDIR"
-	if [ ! -d "$FILESDIR" ]
-	then 
-		echo "${FILESDIR} does not represent a directory on the file system"
-		exit 1
-	else
-		FILECOUNT=$(find ${FILESDIR} -type f | wc -l)
-		cd ${FILESDIR}
-		WORDCOUNT=$(grep -r "${SEARCHSTR}" * | wc -l)
-		echo "The number of files are ${FILECOUNT} and the number of matching lines are ${WORDCOUNT}"
-
-		#echo "The number of file founds are ${FILECOUNT} and the number of matching are ${WORDCOUNT}"
-	fi
 fi
-		
-		
+
+DIR=$1
+STR=$2
+
+if [[ ! -d "$DIR" ]]; then
+	echo "$DIR is not a valid directory"
+	exit 1
+fi
+
+N_FILES=$(find "$DIR" -type f | wc -l)
+
+N_MATCHES=$(grep -R -I -F -o -- "$STR" "$DIR" | wc -l)
+
+echo "The number of files are $N_FILES and the number of matching lines are $N_MATCHES"
