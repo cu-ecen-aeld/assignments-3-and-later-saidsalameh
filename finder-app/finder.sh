@@ -1,24 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-N_ARGS=2
-if [[ $# -ne "$N_ARGS" ]]; then
-	echo "The script requires 2 arguments:"
-	echo "1. File directory"
-	echo "2. Search string"
-	echo "Usage : $0 <arg1> <arg2>"
-	exit 1
-fi
+FILESDIR=$1;
+SEARCHSTR=$2;
 
-DIR=$1
-STR=$2
+if [ -z "$FILESDIR" ] || [ -z "$SEARCHSTR" ]; then
+    echo "finder.sh expects 2 arguments: ./finder.sh <filesdir> <searchstr>";
+    exit 1;
+fi;
 
-if [[ ! -d "$DIR" ]]; then
-	echo "$DIR is not a valid directory"
-	exit 1
-fi
+if [ ! -d "$FILESDIR" ]; then
+    echo "Directory $FILESDIR does not exist";
+    exit 1;
+fi;
 
-N_FILES=$(find "$DIR" -type f | wc -l)
+NUMFILES=$(find "$FILESDIR" -type f | wc -l)
+NUMLINES=$(grep -r "$SEARCHSTR" "$FILESDIR" 2>/dev/null | wc -l)
 
-N_MATCHES=$(grep -R -I -F -o -- "$STR" "$DIR" | wc -l)
-
-echo "The number of files are $N_FILES and the number of matching lines are $N_MATCHES"
+echo "The number of files are $NUMFILES and the number of matching lines are $NUMLINES";

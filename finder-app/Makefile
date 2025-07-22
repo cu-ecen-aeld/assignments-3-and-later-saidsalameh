@@ -1,22 +1,18 @@
+CC = $(CROSS_COMPILE)gcc
+CFLAGS = -Wall -Werror
+TARGET = writer
+SRC = writer.c
+OBJ = $(SRC:.c=.o)
 
-CC := $(CROSS_COMPILE)gcc
-CFLAGS := -Wall -Wextra -O2
-TARGET := writer
-SRC := writer.c
-OBJ := $(SRC:.c=.o)
-
+.PHONY: all clean
 
 all: $(TARGET)
-
 
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-
 clean:
-	rm -f $(TARGET) *.o
-
+	rm -f $(TARGET) *.o 
